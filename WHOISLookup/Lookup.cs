@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using System.IO;
+using System.Text;
 
 namespace WHOISLookup
 {
@@ -15,17 +17,10 @@ namespace WHOISLookup
         [STAThread]
         static void Main()
         {
-            /*Application.EnableVisualStyles();
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());*/
-
-            WHOISLookup();
-        }
-
-        public static void WHOISLookup()
-        {
-            TcpClient client = new TcpClient("whois.verisign-grs.com", 43);
-            Console.WriteLine(client.GetStream().Length);
+            Application.Run(new Form1());
+            Console.WriteLine(WhoIsReponse.SendQuery("whois.name.com", "aletoledo.com"));
         }
     }
 }
