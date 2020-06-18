@@ -10,17 +10,15 @@ namespace WHOISLookup
 {
     class WhoIsReponse
     {
-        List<string> queryResults = new List<string>();
+        public List<string> queryResults = new List<string>();
 
         public WhoIsReponse(string whoIsServer, string domain)
         {
             //check for registrar whois server
-            foreach (string info in SendQuery(whoIsServer, domain).Split('\n'))
-            {
-                if (info.Contains("Registrar WHOIS Server:"))
-                {
-                    whoIsServer = info.Substring(info.IndexOf(':') + 1, info.Length - (info.IndexOf(':') + 1));
-                }
+            var results = string.Join("\n", SendQuery(whoIsServer, domain).Split('\n').Where(str => str.Contains("Registrar WHOIS Server:")));
+            if (results.Length > results.IndexOf(":") + 1)
+            { 
+                whoIsServer = results.Substring(results.IndexOf(":") + 1, results.Length - (results.IndexOf(":") + 1)).Trim(); 
             }
 
             queryResults = SendQuery(whoIsServer, domain).Split('\n').ToList();

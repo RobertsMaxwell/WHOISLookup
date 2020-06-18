@@ -31,7 +31,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.domainLabel = new System.Windows.Forms.Label();
             this.domainText = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // button1
@@ -42,6 +43,7 @@
             this.button1.TabIndex = 7;
             this.button1.Text = "Search";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // domainLabel
             // 
@@ -59,15 +61,22 @@
             this.domainText.Size = new System.Drawing.Size(126, 20);
             this.domainText.TabIndex = 5;
             // 
-            // listView1
+            // button2
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(156, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(632, 438);
-            this.listView1.TabIndex = 4;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.button2.Location = new System.Drawing.Point(13, 350);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(127, 41);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "Web View";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(145, 5);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(642, 433);
+            this.listBox1.TabIndex = 10;
             // 
             // Form1
             // 
@@ -75,10 +84,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.domainLabel);
             this.Controls.Add(this.domainText);
-            this.Controls.Add(this.listView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -93,7 +103,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label domainLabel;
         private System.Windows.Forms.TextBox domainText;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
