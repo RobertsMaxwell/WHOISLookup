@@ -1,6 +1,6 @@
 ﻿namespace WHOISLookup
 {
-    partial class Form1
+    partial class Maxwell
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Maxwell));
             this.SearchButton = new System.Windows.Forms.Button();
             this.domainLabel = new System.Windows.Forms.Label();
             this.domainText = new System.Windows.Forms.TextBox();
@@ -69,7 +70,7 @@
             this.listBox1.TabIndex = 10;
             this.listBox1.TabStop = false;
             // 
-            // Form1
+            // Maxwell
             // 
             this.AcceptButton = this.SearchButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -81,7 +82,8 @@
             this.Controls.Add(this.domainLabel);
             this.Controls.Add(this.domainText);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Maxwell";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

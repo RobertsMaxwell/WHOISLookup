@@ -12,11 +12,11 @@ using System.Net;
 
 namespace WHOISLookup
 {
-    public partial class Form1 : Form
+    public partial class Maxwell : Form
     {
         public static string address;
 
-        public Form1()
+        public Maxwell()
         {
             InitializeComponent();
         }
@@ -34,6 +34,11 @@ namespace WHOISLookup
             {
                 MessageBox.Show("Please enter a valid domain name", "Error", MessageBoxButtons.OK);
                 return;
+            }
+
+            if (address.Contains(".uk"))
+            {
+                MessageBox.Show(".uk TLD's are not supported.", "Error", MessageBoxButtons.OK);
             }
 
             try
