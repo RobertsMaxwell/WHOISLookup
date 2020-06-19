@@ -15,31 +15,46 @@ namespace WHOISLookup
         public WhoIsReponse(string whoIsServer, string domain)
         {
             //check for registrar whois server
-            var results = string.Join("\n", SendQuery(whoIsServer, domain).Split('\n').Where(str => str.Contains("Registrar WHOIS Server:")));
-            if (results.Length > results.IndexOf(":") + 1)
+            var resultsIANA = string.Join("\n", SendQuery(whoIsServer.Trim(), domain).Split('\n').Where(str => str.Contains("refer:")));
+            if (resultsIANA.Length > resultsIANA.IndexOf(":") + 1)
             { 
-                whoIsServer = results.Substring(results.IndexOf(":") + 1, results.Length - (results.IndexOf(":") + 1)).Trim(); 
+                whoIsServer = resultsIANA.Substring(resultsIANA.IndexOf(":") + 1, resultsIANA.Length - (resultsIANA.IndexOf(":") + 1)); 
             }
-
-            queryResults = SendQuery(whoIsServer, domain).Split('\n').ToList();
+            
+            var results = string.Join("\n", SendQuery(whoIsServer.Trim(), domain).Split('\n').Where(str => str.Contains("Registrar WHOIS Server:")));
+            if (results.Length > results.IndexOf(":") + 1)
+            {
+                whoIsServer = results.Substring(results.IndexOf(":") + 1, results.Length - (results.IndexOf(":") + 1));
+            }
+            
+            queryResults = SendQuery(whoIsServer.Trim(), domain).Split('\n').ToList();
         }
 
         public static string SendQuery(string whoIsServer, string domain)
         {
-            string log = "";
-
-            TcpClient client = new TcpClient(whoIsServer, 43);
-            NetworkStream netStream = client.GetStream();
-            byte[] domainByte = Encoding.ASCII.GetBytes(domain + "\n");
-            netStream.Write(domainByte, 0, domainByte.Length);
-            StreamReader reader = new StreamReader(client.GetStream(), Encoding.ASCII);
-
-            do
+            Console.WriteLine($"SENDING QUERY TO {whoIsServer}");
+            try
             {
-                log += (char)reader.Read();
-            } while (netStream.DataAvailable);
+                TcpClient client = new TcpClient(whoIsServer, 43)
+                {
+                    SendTimeout = 3000
+                };
+                NetworkStream netStream = client.GetStream();
+                byte[] domainByte = Encoding.ASCII.GetBytes(domain + "\n");
+                netStream.Write(domainByte, 0, domainByte.Length);
+                StreamReader reader = new StreamReader(client.GetStream(), Encoding.ASCII);
+                string log = "";
+                do
+                {
+                    log += (char)reader.Read();
+                } while (netStream.DataAvailable);
 
-            return log;
+                return log;
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw e;
+            }
         }
     }
 }

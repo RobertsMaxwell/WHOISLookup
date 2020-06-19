@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Net;
 
 namespace WHOISLookup
 {
@@ -26,9 +28,24 @@ namespace WHOISLookup
 
         private void button1_Click(object sender, EventArgs e)
         {
-            address = domainText.Text;
-            Console.WriteLine(GetWhoIsServer(address));
-            PopulateDisplay(new WhoIsReponse("whois.verisign-grs.com", address).queryResults);
+            address = CleanAddress(domainText.Text);
+
+            if (address.Where(c => c == '.').Count() < 1)
+            {
+                MessageBox.Show("Please enter a valid domain name", "Error", MessageBoxButtons.OK);
+                return;
+            }
+
+            try
+            {
+                PopulateDisplay(new WhoIsReponse("whois.iana.org", address).queryResults);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK);
+                return;
+            }
+
         }
 
         public void PopulateDisplay(List<string> entries)
@@ -36,13 +53,19 @@ namespace WHOISLookup
             listBox1.Items.Clear();
             foreach (string entry in entries)
             {
-                listBox1.Items.Add(entry);     
+                listBox1.Items.Add(entry);
             }
         }
 
-        public string GetWhoIsServer(string address)
-        { 
-            
+        public string CleanAddress(string address)
+        {
+            address = address.Trim().ToLower();
+            address = address.Replace(@"\", "");
+            address = address.Replace("/", "");
+            address = address.Replace("https:", "");
+            address = address.Replace("www.", "");
+            return address;
         }
+
     }
 }
